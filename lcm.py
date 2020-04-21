@@ -1,23 +1,18 @@
-numbers = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
-factors = {}
-allFactors = {}
 def primeNumbers(n):
   prime = [True for i in range(n + 1)]
+  p = 2
+  while (p * p <= n):
 
-      p = 2
-      while (p * p <= n):
+      # If prime[p] is not changed, then it is
+      # a prime
+      if (prime[p] == True):
 
-          # If prime[p] is not changed, then it is
-          # a prime
-          if (prime[p] == True):
+          # Update all multiples of p
+          for i in range(p * 2, n + 1, p):
+              prime[i] = False
+      p += 1
+  return [i for i, val in enumerate(prime) if val == True and i not in {0, 1}]
 
-              # Update all multiples of p
-              for i in range(p * 2, n + 1, p):
-                  prime[i] = False
-          p += 1
-      total = 0
-      return [i for i, val in enumerate(prime) if val == True]
-      
 def primeFactors(number, factors, prime_numbers):
   if number == 1:
     return factors
@@ -28,7 +23,7 @@ def primeFactors(number, factors, prime_numbers):
       else:
         factors[i] += 1
       number /= i
-  return primeFactors(number, factors)
+  return primeFactors(number, factors, prime_numbers)
 
 def highestExponent(dict1, dict2):
   highest_exponent = {}
@@ -51,10 +46,11 @@ def LCM(numbers, prime_numbers):
     LCM *= (key ** factorsDict[key])
   return LCM
 
-print(LCM(numbers))
 
 def main():
   numbers = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
   prime_numbers = primeNumbers(max(numbers))
   print(LCM(numbers, prime_numbers))
-  
+
+
+main()
